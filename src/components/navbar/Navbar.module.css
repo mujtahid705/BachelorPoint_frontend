@@ -1,0 +1,73 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  height: 50px;
+  background-color: rgb(236, 236, 236);
+}
+
+.logoContainer {
+  /* background-color: red; */
+}
+
+.logo {
+  width: 70px;
+}
+
+.optionsContainer {
+  flex: 1;
+  /* background-color: blue; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.options {
+  font-size: 15px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.options:hover {
+  border-bottom: 2px solid rgb(33, 33, 132);
+}
+
+.loginContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.loginBtn {
+  font-size: 15px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: 0.5s ease;
+}
+
+.loginBtn:hover {
+  padding: 2px 8px;
+  border-radius: 50px;
+  background-color: rgb(54, 54, 54);
+  color: white;
+}
+
+.logoutBtn {
+  font-size: 15px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: 0.5s ease;
+}
+
+.logoutBtn:hover {
+  padding: 2px 8px;
+  border-radius: 50px;
+  background-color: #cf1322;
+  color: white;
+}
