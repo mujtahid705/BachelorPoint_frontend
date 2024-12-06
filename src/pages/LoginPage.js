@@ -30,22 +30,17 @@ const LoginPage = () => {
               style={{
                 maxWidth: 600,
               }}
-              initialValues={
-                {
-                  // remember: true,
-                }
-              }
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
               autoComplete="off"
             >
               <Form.Item
-                label="Username"
-                name="username"
+                label="BracU Student ID"
+                name="student id"
                 rules={[
                   {
                     required: true,
-                    message: "Please input your username!",
+                    message: "Please enter your student id!",
                   },
                 ]}
               >
@@ -58,7 +53,7 @@ const LoginPage = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please input your password!",
+                    message: "Please enter your password!",
                   },
                 ]}
               >
@@ -67,7 +62,7 @@ const LoginPage = () => {
 
               <Form.Item label={null}>
                 <Button type="primary" htmlType="submit">
-                  Submit
+                  Login
                 </Button>
               </Form.Item>
             </Form>
