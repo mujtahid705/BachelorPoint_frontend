@@ -7,17 +7,12 @@
   background-color: rgb(236, 236, 236);
 }
 
-.logoContainer {
-  /* background-color: red; */
-}
-
 .logo {
   width: 70px;
 }
 
 .optionsContainer {
   flex: 1;
-  /* background-color: blue; */
   display: flex;
   justify-content: center;
   align-items: center;
