@@ -30,6 +30,14 @@
   border-bottom: 2px solid rgb(33, 33, 132);
 }
 
+.activeOption {
+  font-size: 15px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  border-bottom: 2px solid rgb(33, 33, 132);
+}
+
 .loginContainer {
   display: flex;
   justify-content: space-between;
@@ -50,6 +58,15 @@
   border-radius: 50px;
   background-color: rgb(54, 54, 54);
   color: white;
+}
+
+.activeLoginBtn {
+  padding: 5px 10px;
+  border-radius: 50px;
+  background-color: rgb(54, 54, 54);
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .logoutBtn {

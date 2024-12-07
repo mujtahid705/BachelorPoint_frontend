@@ -1,8 +1,9 @@
 import styles from "./Navbar.module.css";
 import logo from "../../assets/logo2.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
+  const location = useLocation();
   return (
     <>
       <div className={styles.container}>
@@ -11,25 +12,65 @@ const Navbar = () => {
         </div>
 
         <div className={styles.optionsContainer}>
-          <Link className={styles.options} to="/">
+          <Link
+            className={
+              location.pathname === "/" ? styles.activeOption : styles.options
+            }
+            to="/"
+          >
             <p>Home</p>
           </Link>
-          <Link className={styles.options} to="/rentals">
+          <Link
+            className={
+              location.pathname === "/rentals"
+                ? styles.activeOption
+                : styles.options
+            }
+            to="/rentals"
+          >
             <p>Rentals</p>
           </Link>
-          <Link className={styles.options} to="/your_posts">
+          <Link
+            className={
+              location.pathname === "/your_posts"
+                ? styles.activeOption
+                : styles.options
+            }
+            to="/your_posts"
+          >
             <p>Your Posts</p>
           </Link>
-          <Link className={styles.options} to="/profile">
+          <Link
+            className={
+              location.pathname === "/profile"
+                ? styles.activeOption
+                : styles.options
+            }
+            to="/profile"
+          >
             <p>Profile</p>
           </Link>
         </div>
 
         <div className={styles.loginContainer}>
-          <Link className={styles.loginBtn} to="/login">
+          <Link
+            className={
+              location.pathname === "/login"
+                ? styles.activeLoginBtn
+                : styles.loginBtn
+            }
+            to="/login"
+          >
             <div>Login</div>
           </Link>
-          <Link className={styles.loginBtn} to="/register">
+          <Link
+            className={
+              location.pathname === "/register"
+                ? styles.activeLoginBtn
+                : styles.loginBtn
+            }
+            to="/register"
+          >
             <div>Register</div>
           </Link>
           {/* <div className={styles.logoutBtn}>Logout</div> */}
