@@ -3,6 +3,7 @@
   justify-content: center;
   align-items: center;
   padding: 0px 20px;
+  margin-top: 20px;
 }
 
 .imgContainer {
@@ -33,4 +34,29 @@
   padding: 20px;
   width: 100%;
   align-items: center;
+}
+
+/* REGISTER PAGE */
+.title {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.formContainerReg {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  box-shadow: 1px -1px 8px -1px rgba(0, 0, 0, 0.27);
+  -webkit-box-shadow: 1px -1px 8px -1px rgba(0, 0, 0, 0.27);
+  -moz-box-shadow: 1px -1px 8px -1px rgba(0, 0, 0, 0.27);
+}
+
+.errorMsg {
+  color: rgb(255, 59, 59);
+  text-align: center;
+  margin-bottom: 20px;
 }

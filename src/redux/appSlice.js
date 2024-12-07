@@ -1,21 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  value: 0,
+  isLoggedin: false,
 };
 
 export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
+    setIsLoggedin: (state, action) => {
+      state.isLoggedin = action.payload;
     },
   },
 });
