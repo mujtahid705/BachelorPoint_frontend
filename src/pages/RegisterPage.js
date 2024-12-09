@@ -11,7 +11,6 @@ const RegisterPage = () => {
   const onFinish = (values) => {
     if (bracuIdImg.length === 0) {
       setImgError(true);
-      console.log("YES");
     } else {
       setImgError(false);
       const data = { ...values, idImg: bracuIdImg };
@@ -28,7 +27,7 @@ const RegisterPage = () => {
     }
   };
 
-  const addBackgroundHandler = (info) => {
+  const addIDHandler = (info) => {
     if (info.fileList.length === 0) return;
     const file = info.file.originFileObj || info.file;
     if (file) {
@@ -40,7 +39,7 @@ const RegisterPage = () => {
     }
   };
 
-  const handleBackgroundRemove = () => {
+  const handleIDRemove = () => {
     setBracuIdImg("");
   };
 
@@ -134,8 +133,8 @@ const RegisterPage = () => {
                 <Upload
                   listType="picture-card"
                   maxCount={1}
-                  onChange={addBackgroundHandler}
-                  onRemove={handleBackgroundRemove}
+                  onChange={addIDHandler}
+                  onRemove={handleIDRemove}
                   beforeUpload={() => false}
                   showUploadList={{
                     showPreviewIcon: false,
