@@ -57,3 +57,42 @@
   font-weight: bold;
   color: #28a745;
 }
+
+/* RentalCardProfile */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+.editButton,
+.deleteButton {
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.editButton {
+  background-color: #007bff;
+  color: white;
+  margin-right: 5px;
+}
+
+.editButton:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.deleteButton {
+  background-color: #dc3545;
+  color: white;
+}
+
+.deleteButton:hover {
+  background-color: #a71d2a;
+  transform: scale(1.05);
+}

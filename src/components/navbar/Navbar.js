@@ -32,16 +32,6 @@ const Navbar = () => {
           </Link>
           <Link
             className={
-              location.pathname === "/your_posts"
-                ? styles.activeOption
-                : styles.options
-            }
-            to="/your_posts"
-          >
-            <p>Your Posts</p>
-          </Link>
-          <Link
-            className={
               location.pathname === "/profile"
                 ? styles.activeOption
                 : styles.options
@@ -53,7 +43,7 @@ const Navbar = () => {
         </div>
 
         <div className={styles.loginContainer}>
-          <Link
+          {/* <Link
             className={
               location.pathname === "/login"
                 ? styles.activeLoginBtn
@@ -72,8 +62,18 @@ const Navbar = () => {
             to="/register"
           >
             <div>Register</div>
+          </Link> */}
+          <Link
+            className={
+              location.pathname === "/add_post"
+                ? styles.activeLoginBtn
+                : styles.loginBtn
+            }
+            to="/add_post"
+          >
+            <div>Add Post</div>
           </Link>
-          {/* <div className={styles.logoutBtn}>Logout</div> */}
+          <div className={styles.logoutBtn}>Logout</div>
         </div>
       </div>
     </>

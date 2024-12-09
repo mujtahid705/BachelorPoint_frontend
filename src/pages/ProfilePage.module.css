@@ -1,0 +1,19 @@
+.posts {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.middleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+}
