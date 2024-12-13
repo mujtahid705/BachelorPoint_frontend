@@ -6,6 +6,8 @@ import RegisterPage from "./pages/RegisterPage";
 import RentalPage from "./pages/RentalPage";
 import ProfilePage from "./pages/ProfilePage";
 import AddPost from "./pages/AddPost";
+import EditProfilePage from "./pages/EditProfilePage";
+import EditPost from "./pages/EditPost";
 
 const App = () => {
   return (
@@ -17,7 +19,9 @@ const App = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/rentals" element={<RentalPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="profile/edit_profile" element={<EditProfilePage />} />
         <Route path="/add_post" element={<AddPost />} />
+        <Route path="edit_post/:id" element={<EditPost />} />
       </Routes>
     </>
   );

@@ -17,3 +17,8 @@
   font-size: 2rem;
   font-weight: bold;
 }
+
+.link {
+  text-decoration: none;
+  color: inherit;
+}

@@ -1,14 +1,10 @@
-.container {
-}
-
 .title {
   text-align: center;
   font-size: 2rem;
-  margin-top: 20px;
+  margin: 20px 0;
 }
 
 .formContainer {
-  /* background-color: blue; */
   display: flex;
   justify-content: center;
   align-items: center;

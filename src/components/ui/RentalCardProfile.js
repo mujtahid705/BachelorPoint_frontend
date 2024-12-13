@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
 import styles from "./RentalCard.module.css";
 
 const RentalCardProfile = ({
+  id,
   image,
   title,
   description,
@@ -23,9 +25,10 @@ const RentalCardProfile = ({
           <span className={styles.price}>{price}</span>
         </div>
         <div className={styles.actions}>
-          <button className={styles.editButton} onClick={onEdit}>
-            Edit
-          </button>
+          <Link className={styles.link} to={`/edit_post/${id}`}>
+            <button className={styles.editButton}>Edit</button>
+          </Link>
+
           <button className={styles.deleteButton} onClick={onDelete}>
             Delete
           </button>

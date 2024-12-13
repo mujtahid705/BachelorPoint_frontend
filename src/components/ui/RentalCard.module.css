@@ -1,3 +1,8 @@
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
 .card {
   width: 300px;
   border-radius: 10px;
@@ -5,6 +10,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
 }
 
 .card:hover {
@@ -63,6 +69,11 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 15px;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
 }
 
 .editButton,
