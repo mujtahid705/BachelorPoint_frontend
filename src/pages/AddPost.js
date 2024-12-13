@@ -15,7 +15,7 @@ const AddPost = () => {
       setImgError(true);
     } else {
       setImgError(false);
-      const data = { ...values, idImg: flatImg };
+      const data = { ...values, flatImg: flatImg };
       console.log("Success:", data);
     }
   };
@@ -56,6 +56,7 @@ const AddPost = () => {
         <div className={styles.formContainer}>
           <Form
             name="basic"
+            className={styles.form}
             labelCol={{
               span: 8,
             }}
@@ -96,12 +97,12 @@ const AddPost = () => {
             </Form.Item>
 
             <Form.Item
-              label="Gsuit Email"
-              name="email"
+              label="Available From (Month)"
+              name="available_from"
               rules={[
                 {
                   required: true,
-                  message: "Please enter your email!",
+                  message: "Please enter when it is available!",
                 },
               ]}
             >
@@ -109,13 +110,12 @@ const AddPost = () => {
             </Form.Item>
 
             <Form.Item
-              label="BracU Student ID"
-              name="student_id"
+              label="Rent (BDT)"
+              name="rent"
               rules={[
                 {
                   required: true,
-                  pattern: /^\d{8}$/,
-                  message: "Please enter your student id!",
+                  message: "Please enter the rent!",
                 },
               ]}
             >
@@ -153,18 +153,11 @@ const AddPost = () => {
                 </button>
               </Upload>
             </Form.Item>
-            {imgError && (
-              <p className={styles.errorMsg}>
-                Please upload your BracU ID Card!
-              </p>
-            )}
+            {imgError && <p className={styles.errorMsg}>Please add images!</p>}
 
             <Form.Item label={null}>
-              {/* <div htmlType="submit">
+              <Button type="none" htmlType="submit">
                 <CustomButton>Upload</CustomButton>
-              </div> */}
-              <Button type="primary" htmlType="submit">
-                Register
               </Button>
             </Form.Item>
           </Form>

@@ -6,3 +6,21 @@
   font-size: 2rem;
   margin-top: 20px;
 }
+
+.formContainer {
+  /* background-color: blue; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  width: 100%;
+}
+
+.errorMsg {
+  color: rgb(255, 59, 59);
+  text-align: center;
+  margin-bottom: 20px;
+  margin-left: -10%;
+}
