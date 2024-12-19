@@ -8,6 +8,7 @@ import ProfilePage from "./pages/ProfilePage";
 import AddPost from "./pages/AddPost";
 import EditProfilePage from "./pages/EditProfilePage";
 import EditPost from "./pages/EditPost";
+import DetailedPostPage from "./pages/DetailedPostPage";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="profile/edit_profile" element={<EditProfilePage />} />
         <Route path="/add_post" element={<AddPost />} />
         <Route path="edit_post/:id" element={<EditPost />} />
+        <Route path="post/:id" element={<DetailedPostPage />} />
       </Routes>
     </>
   );

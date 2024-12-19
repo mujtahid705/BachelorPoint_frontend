@@ -1,0 +1,55 @@
+.detailesContainer {
+  background-color: #f5f5f5;
+  padding: 10px 20px;
+  border-radius: 20px;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.bar {
+  margin-bottom: 10px;
+  height: 3px;
+  width: 100%;
+  background-color: #595959;
+}
+
+.description {
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+.item {
+  font-weight: bold;
+}
+
+.male {
+  font-size: 30px;
+  color: #597ef7;
+  margin-bottom: -10px;
+}
+
+.available {
+  /* font-size: 1.2rem; */
+  font-weight: normal;
+}
+
+.female {
+  font-size: 30px;
+  color: #f759ab;
+  margin-bottom: -10px;
+}
+
+.rent {
+  color: rgb(60, 176, 60);
+  font-size: 1.5rem;
+}
+
+.pInfo {
+  margin-top: 20px;
+}
+
+.action {
+  margin: 20px 0;
+}
