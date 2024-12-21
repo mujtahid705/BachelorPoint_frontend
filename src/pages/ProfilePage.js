@@ -1,14 +1,24 @@
+import styles from "./ProfilePage.module.css";
 import ProfileCover from "../components/ui/ProfileCover";
 import RentalCardProfile from "../components/ui/RentalCardProfile";
-import styles from "./ProfilePage.module.css";
+import CustomButton from "../components/ui/CustomButton";
+import { Link } from "react-router-dom";
 
 import img from "../assets/cover2.jpg";
 import img1 from "../assets/apartment1.jpg";
 import img2 from "../assets/apartment2.jpg";
 import img3 from "../assets/apartment3.jpg";
 import img4 from "../assets/apartment4.jpg";
-import CustomButton from "../components/ui/CustomButton";
-import { Link } from "react-router-dom";
+import cover from "../assets/cover2.jpg";
+import dp from "../assets/dp1.jpg";
+
+const USER = {
+  name: "Muhammad Mujtahid",
+  bio: "This is a awesome bio!!",
+  studentId: "+8801973108826",
+  email: "muhammad.mujtahid@g.bracu.ac.bd",
+  dp: dp,
+};
 
 const DUMMY_DATA = [
   {
@@ -56,7 +66,14 @@ const DUMMY_DATA = [
 const ProfilePage = () => {
   return (
     <div>
-      <ProfileCover />
+      <ProfileCover
+        name={USER.name}
+        bio={USER.bio}
+        studentId={USER.studentId}
+        email={USER.email}
+        dp={USER.dp}
+        cover={cover}
+      />
 
       <div className={styles.middleContainer}>
         <p className={styles.title}>Posts:</p>

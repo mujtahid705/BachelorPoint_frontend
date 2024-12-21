@@ -40,6 +40,18 @@ const Navbar = () => {
           >
             <p>Profile</p>
           </Link>
+
+          {/* Will be available only for the admin */}
+          <Link
+            className={
+              location.pathname === "/admin"
+                ? styles.activeOption
+                : styles.options
+            }
+            to="/admin"
+          >
+            <p>Admin Panel</p>
+          </Link>
         </div>
 
         <div className={styles.loginContainer}>

@@ -1,17 +1,16 @@
 import styles from "./PageCover.module.css";
 import cover2 from "../../assets/cover2.jpg";
-import dp from "../../assets/dp1.jpg";
 
-const ProfileCover = ({ title, heading }) => {
+const ProfileCover = ({ name, bio, studentId, email, cover, dp }) => {
   return (
     <>
       <div className={styles.container}>
         <div
           className={styles.img}
           style={{
-            backgroundImage: `url(${cover2})`,
+            backgroundImage: `url(${cover})`,
           }}
-          src={cover2}
+          src={cover}
           alt="page_cover_image"
         >
           <div className={styles.overlay}>
@@ -23,14 +22,12 @@ const ProfileCover = ({ title, heading }) => {
                 }}
               ></div>
               <div>
-                <h2 className={styles.name}>Muhammad Mujtahid</h2>
+                <h2 className={styles.name}>{name}</h2>
                 <div className={styles.line2}></div>
-                <p className={styles.subtitle}>This is an awesome bio!!</p>
+                <p className={styles.subtitle}>{bio}</p>
                 <div className={styles.line3}></div>
-                <p className={styles.subtitle}>ID: 22299037</p>
-                <p className={styles.subtitle}>
-                  email: muhammad.mujtahid@g.bracu.ac.bd
-                </p>
+                <p className={styles.subtitle}>ID: {studentId}</p>
+                <p className={styles.subtitle}>email: {email}</p>
               </div>
             </div>
           </div>

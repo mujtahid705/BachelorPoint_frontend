@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "./RentalCard.module.css";
 
-const RentalCard = ({ id, image, title, description, price, location }) => {
+const RentalCard = ({ id, image, title, description, rent, location }) => {
   return (
     <Link className={styles.link} to={`/post/${id}`}>
       <div className={styles.card}>
@@ -14,7 +14,7 @@ const RentalCard = ({ id, image, title, description, price, location }) => {
           <p className={styles.description}>{description}</p>
           <div className={styles.footer}>
             <span className={styles.location}>{location}</span>
-            <span className={styles.price}>{price}</span>
+            <span className={styles.price}>{rent}</span>
           </div>
         </div>
       </div>
