@@ -1,10 +1,33 @@
 import styles from "./LoginPage.module.css";
 import logo from "../assets/logo2.png";
 import { Button, Form, Input } from "antd";
+import toast, { Toaster } from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import useAuthLogin from "../hooks/useAuthLogin";
+import { setIsLoggedin } from "../redux/appSlice";
 
 const LoginPage = () => {
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { loading, error, login } = useAuthLogin();
+
+  const onFinish = async (values) => {
+    const data = await login(values);
+
+    if (error || data.error) {
+      toast.error(data.error);
+    } else if (data && data.token) {
+      toast.success(data.message);
+      localStorage.setItem("bp-token", data.token);
+      dispatch(setIsLoggedin(true));
+
+      setTimeout(() => {
+        navigate("/rentals");
+      }, 3000);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -12,6 +35,9 @@ const LoginPage = () => {
   };
   return (
     <>
+      <div>
+        <Toaster />
+      </div>
       <div className={styles.container}>
         <div className={styles.imgContainer}>
           <img className={styles.img} src={logo} alt="logo" />
@@ -36,7 +62,7 @@ const LoginPage = () => {
             >
               <Form.Item
                 label="BracU Student ID"
-                name="student id"
+                name="studentId"
                 rules={[
                   {
                     required: true,

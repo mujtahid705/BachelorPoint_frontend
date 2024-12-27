@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isLoggedin: false,
+  isLoading: false,
+  user: null,
 };
 
 export const appSlice = createSlice({
@@ -11,9 +13,17 @@ export const appSlice = createSlice({
     setIsLoggedin: (state, action) => {
       state.isLoggedin = action.payload;
     },
+
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
+
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
   },
 });
 
-export const { increment, decrement, incrementByAmount } = appSlice.actions;
+export const { setIsLoggedin, setIsLoading, setUser } = appSlice.actions;
 
 export default appSlice.reducer;

@@ -1,20 +1,43 @@
 import styles from "./LoginPage.module.css";
 import logo from "../assets/logo2.png";
-import { Button, Form, Input, Upload } from "antd";
+import { Button, Form, Input, Upload, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+
+import useAuthRegister from "../hooks/useAuthRegister";
+import { useNavigate } from "react-router-dom";
+
+const { Option } = Select;
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+  const { error, registerUser } = useAuthRegister();
+  const [gender, setGender] = useState("");
   const [bracuIdImg, setBracuIdImg] = useState("");
   const [imgError, setImgError] = useState("");
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     if (bracuIdImg.length === 0) {
       setImgError(true);
     } else {
       setImgError(false);
-      const data = { ...values, idImg: bracuIdImg };
+      const data = { ...values, gender, idCard: bracuIdImg };
       console.log("Success:", data);
+
+      // Call the registerUser function from useAuthRegister
+      const resData = await registerUser(data);
+      console.log(resData, "RES DATA");
+      console.log(error, "ERROR");
+
+      if (error || resData.error) {
+        toast.error(resData.error.sqlMessage);
+      } else {
+        toast.success(resData.message);
+      }
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
     }
   };
 
@@ -29,6 +52,7 @@ const RegisterPage = () => {
 
   const addIDHandler = (info) => {
     if (info.fileList.length === 0) return;
+    console.log(info.fileList);
     const file = info.file.originFileObj || info.file;
     if (file) {
       const reader = new FileReader();
@@ -36,6 +60,8 @@ const RegisterPage = () => {
         setBracuIdImg(reader.result);
       };
       reader.readAsDataURL(file);
+      console.log(file);
+      setBracuIdImg(file);
     }
   };
 
@@ -43,8 +69,15 @@ const RegisterPage = () => {
     setBracuIdImg("");
   };
 
+  const onGenderChange = (value) => {
+    setGender(value);
+  };
+
   return (
     <>
+      <div>
+        <Toaster />
+      </div>
       <div className={styles.container}>
         <div className={styles.imgContainer}>
           <img className={styles.img} src={logo} alt="logo" />
@@ -95,8 +128,28 @@ const RegisterPage = () => {
               </Form.Item>
 
               <Form.Item
+                name="gender"
+                label="Gender"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Select
+                  placeholder="Select a option and change input text above"
+                  onChange={onGenderChange}
+                  allowClear
+                >
+                  <Option value="male">male</Option>
+                  <Option value="female">female</Option>
+                  <Option value="other">other</Option>
+                </Select>
+              </Form.Item>
+
+              <Form.Item
                 label="BracU Student ID"
-                name="student_id"
+                name="studentId"
                 rules={[
                   {
                     required: true,

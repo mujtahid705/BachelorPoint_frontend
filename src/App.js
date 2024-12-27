@@ -10,8 +10,30 @@ import EditProfilePage from "./pages/EditProfilePage";
 import EditPost from "./pages/EditPost";
 import DetailedPostPage from "./pages/DetailedPostPage";
 import AdminPanelPage from "./pages/AdminPanelPage";
+import Footer from "./components/navbar/Footer";
+import { useEffect } from "react";
+import useInitialize from "./hooks/useInitialize";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsLoggedin, setUser } from "./redux/appSlice";
 
 const App = () => {
+  const dispatch = useDispatch();
+  const isLoggedin = useSelector((state) => state.app.isLoggedin);
+
+  const initialize = useInitialize();
+
+  // Checking the validity of the token and fetching the user data
+  useEffect(() => {
+    const checkToken = async () => {
+      const userData = await initialize(); // function from the useInitialize custom hook
+      console.log(userData);
+      dispatch(setIsLoggedin(userData ? true : false));
+      dispatch(setUser(userData));
+    };
+
+    checkToken();
+  }, [isLoggedin]);
+
   return (
     <>
       <Navbar />
@@ -27,6 +49,7 @@ const App = () => {
         <Route path="post/:id" element={<DetailedPostPage />} />
         <Route path="/admin" element={<AdminPanelPage />} />
       </Routes>
+      <Footer />
     </>
   );
 };

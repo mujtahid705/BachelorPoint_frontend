@@ -14,7 +14,7 @@ const DUMMY_DATA = [
     image: img,
     title: "Three Bed Apartment",
     description: "Its a fully furnished two bed apartment. Size: 1500sqft",
-    price: "40,000 Taka",
+    rent: "40,000 Taka",
     location: "Road 8, Gulshan, Dhaka",
   },
   {
@@ -22,7 +22,7 @@ const DUMMY_DATA = [
     image: img1,
     title: "Fully Furnished Apartment",
     description: "Its a fully furnished two bed apartment. Size: 1500sqft",
-    price: "65,000 Taka",
+    rent: "65,000 Taka",
     location: "Road 11, Banani, Dhaka",
   },
   {
@@ -30,7 +30,7 @@ const DUMMY_DATA = [
     image: img2,
     title: "Two Bed Apartment",
     description: "Its a fully furnished two bed apartment. Size: 1500sqft",
-    price: "25,000 Taka",
+    rent: "25,000 Taka",
     location: "Sector 11, Uttara, Dhaka",
   },
   {
@@ -38,7 +38,7 @@ const DUMMY_DATA = [
     image: img3,
     title: "One Bedroom for Rent",
     description: "Its a fully furnished two bed apartment. Size: 1500sqft",
-    price: "9,500 Taka",
+    rent: "9,500 Taka",
     location: "Merul Badda, Dhaka",
   },
   {
@@ -46,7 +46,7 @@ const DUMMY_DATA = [
     image: img4,
     title: "One Seat in a Bedroom for Rent",
     description: "Its a fully furnished two bed apartment. Size: 1500sqft",
-    price: "5,000 Taka",
+    rent: "5,000 Taka",
     location: "Merul Badda, Dhaka",
   },
 ];
@@ -79,7 +79,7 @@ const ApAllPostsList = () => {
               <th>Image</th>
               <th>Title</th>
               <th>Description</th>
-              <th>Price</th>
+              <th>Rent</th>
               <th>Location</th>
               <th>Action</th>
             </tr>
@@ -97,7 +97,7 @@ const ApAllPostsList = () => {
                 </td>
                 <td>{post.title}</td>
                 <td>{post.description}</td>
-                <td>{post.price}</td>
+                <td>{post.rent}</td>
                 <td>{post.location}</td>
                 <td>
                   <Button type="primary" danger>
