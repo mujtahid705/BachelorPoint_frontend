@@ -4,6 +4,7 @@ import styles from "./ApAllUsersList.module.css";
 import { imgBaseUrl } from "../../base_url";
 import useApproveAccount from "../../hooks/useApproveAccount";
 import toast, { Toaster } from "react-hot-toast";
+import useDeleteAccount from "../../hooks/useDeleteAccount";
 
 const ApAccountApprove = ({ users, setReloadTrigger }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -22,6 +23,19 @@ const ApAccountApprove = ({ users, setReloadTrigger }) => {
   const approveAccount = useApproveAccount();
   const approveUserHandler = async (id) => {
     const data = await approveAccount(id);
+
+    if (data.error) {
+      toast.error(data.error);
+    } else {
+      toast.success(data.message);
+      setReloadTrigger((prev) => !prev);
+    }
+  };
+
+  // Deleting accounts
+  const deleteAccount = useDeleteAccount();
+  const deleteAccountHandler = async (id) => {
+    const data = await deleteAccount(id);
 
     if (data.error) {
       toast.error(data.error);
@@ -80,7 +94,11 @@ const ApAccountApprove = ({ users, setReloadTrigger }) => {
                       Approve
                     </Button>
                     {"  "}
-                    <Button type="primary" danger>
+                    <Button
+                      type="primary"
+                      danger
+                      onClick={() => deleteAccountHandler(user.studentId)}
+                    >
                       Delete
                     </Button>
                   </td>
