@@ -23,13 +23,15 @@ const DUMMY_USERS = [
   },
 ];
 
-const ApAllUsersList = () => {
+const ApAllUsersList = ({ users }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredData = DUMMY_USERS.filter(
+  const approvedUsers = users.filter((user) => user.status === "approved");
+
+  const filteredData = approvedUsers.filter(
     (user) =>
       user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.studentId.includes(searchQuery)
+      user.studentId.toString().includes(searchQuery)
   );
 
   return (
@@ -51,6 +53,7 @@ const ApAllUsersList = () => {
               <th>Name</th>
               <th>Email</th>
               <th>Gender</th>
+              <th>Type</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -61,6 +64,7 @@ const ApAllUsersList = () => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{user.gender}</td>
+                <td>{user.type}</td>
                 <td>
                   <Button type="primary" danger>
                     Ban User

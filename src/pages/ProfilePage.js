@@ -11,14 +11,15 @@ import img3 from "../assets/apartment3.jpg";
 import img4 from "../assets/apartment4.jpg";
 import cover from "../assets/cover2.jpg";
 import dp from "../assets/dp1.jpg";
+import { useSelector } from "react-redux";
 
-const USER = {
-  name: "Muhammad Mujtahid",
-  bio: "This is a awesome bio!!",
-  studentId: "+8801973108826",
-  email: "muhammad.mujtahid@g.bracu.ac.bd",
-  dp: dp,
-};
+// const USER = {
+//   name: "Muhammad Mujtahid",
+//   bio: "This is a awesome bio!!",
+//   studentId: "+8801973108826",
+//   email: "muhammad.mujtahid@g.bracu.ac.bd",
+//   dp: dp,
+// };
 
 const DUMMY_DATA = [
   {
@@ -64,16 +65,21 @@ const DUMMY_DATA = [
 ];
 
 const ProfilePage = () => {
+  const user = useSelector((state) => state.app.user);
   return (
     <div>
-      <ProfileCover
-        name={USER.name}
-        bio={USER.bio}
-        studentId={USER.studentId}
-        email={USER.email}
-        dp={USER.dp}
-        cover={cover}
-      />
+      {user && (
+        <ProfileCover
+          name={user.name}
+          bio={
+            user.bio ? user.bio : "Add a bio to your profile from edit profile!"
+          }
+          studentId={user.studentId}
+          email={user.email}
+          dp={user.dp ? user.dp : dp}
+          cover={cover}
+        />
+      )}
 
       <div className={styles.middleContainer}>
         <p className={styles.title}>Posts:</p>

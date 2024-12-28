@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import Navbar from "./components/navbar/Navbar";
@@ -18,17 +18,24 @@ import { setIsLoggedin, setUser } from "./redux/appSlice";
 
 const App = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isLoggedin = useSelector((state) => state.app.isLoggedin);
 
-  const initialize = useInitialize();
-
   // Checking the validity of the token and fetching the user data
+  const initialize = useInitialize();
   useEffect(() => {
     const checkToken = async () => {
       const userData = await initialize(); // function from the useInitialize custom hook
-      console.log(userData);
-      dispatch(setIsLoggedin(userData ? true : false));
-      dispatch(setUser(userData));
+
+      if (userData.error) {
+        localStorage.removeItem("bp-token");
+        dispatch(setIsLoggedin(false));
+        dispatch(setUser(null));
+        navigate("/login");
+      } else {
+        dispatch(setIsLoggedin(true));
+        dispatch(setUser(userData));
+      }
     };
 
     checkToken();

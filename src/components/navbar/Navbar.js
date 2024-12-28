@@ -7,7 +7,10 @@ import { setIsLoggedin } from "../../redux/appSlice";
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const isLoggedin = useSelector((state) => state.app.isLoggedin);
+  const user = useSelector((state) => state.app.user);
+
   const location = useLocation();
 
   const logoutHandler = () => {
@@ -59,7 +62,7 @@ const Navbar = () => {
           )}
 
           {/* Will be available only for the admin */}
-          {isLoggedin && (
+          {isLoggedin && user && user.type === "admin" && (
             <Link
               className={
                 location.pathname === "/admin"
