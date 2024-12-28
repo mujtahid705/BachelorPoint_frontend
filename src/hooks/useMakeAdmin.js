@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux";
-import { setIsLoading } from "../redux/appSlice";
 import { baseUrl } from "../base_url";
+import { setIsLoading } from "../redux/appSlice";
 
-const approve = async (id) => {
+const adminRequest = async (id) => {
   const token = localStorage.getItem("bp-token");
-  const response = await fetch(`${baseUrl}/users/approve/${id}`, {
-    method: "get",
+  const response = await fetch(`${baseUrl}/users/makeAdmin/${id}`, {
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -21,14 +21,14 @@ const approve = async (id) => {
   return data;
 };
 
-const useApproveAccount = () => {
+const useMakeAdmin = () => {
   const dispatch = useDispatch();
 
-  const approveAccount = async (id) => {
+  const makeAdmin = async (id) => {
     dispatch(setIsLoading(true));
 
     try {
-      const data = await approve(id);
+      const data = await adminRequest(id);
 
       dispatch(setIsLoading(false));
 
@@ -40,7 +40,7 @@ const useApproveAccount = () => {
     }
   };
 
-  return approveAccount;
+  return makeAdmin;
 };
 
-export default useApproveAccount;
+export default useMakeAdmin;

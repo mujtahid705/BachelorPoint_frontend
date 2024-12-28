@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux";
-import { setIsLoading } from "../redux/appSlice";
 import { baseUrl } from "../base_url";
+import { setIsLoading } from "../redux/appSlice";
 
-const approve = async (id) => {
+const banById = async (id) => {
   const token = localStorage.getItem("bp-token");
-  const response = await fetch(`${baseUrl}/users/approve/${id}`, {
-    method: "get",
+  const response = await fetch(`${baseUrl}/users/ban/${id}`, {
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -21,14 +21,14 @@ const approve = async (id) => {
   return data;
 };
 
-const useApproveAccount = () => {
+const useBanUser = () => {
   const dispatch = useDispatch();
 
-  const approveAccount = async (id) => {
+  const banUser = async (id) => {
     dispatch(setIsLoading(true));
 
     try {
-      const data = await approve(id);
+      const data = await banById(id);
 
       dispatch(setIsLoading(false));
 
@@ -40,7 +40,7 @@ const useApproveAccount = () => {
     }
   };
 
-  return approveAccount;
+  return banUser;
 };
 
-export default useApproveAccount;
+export default useBanUser;
