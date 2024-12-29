@@ -1,5 +1,4 @@
 import styles from "./PageCover.module.css";
-import cover2 from "../../assets/cover2.jpg";
 
 const ProfileCover = ({ name, bio, studentId, email, cover, dp }) => {
   return (

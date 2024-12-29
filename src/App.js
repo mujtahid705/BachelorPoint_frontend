@@ -20,6 +20,7 @@ const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedin = useSelector((state) => state.app.isLoggedin);
+  const triggerReload = useSelector((state) => state.app.triggerReload);
 
   // Checking the validity of the token and fetching the user data
   const initialize = useInitialize();
@@ -39,7 +40,7 @@ const App = () => {
     };
 
     checkToken();
-  }, [isLoggedin]);
+  }, [isLoggedin, triggerReload]);
 
   return (
     <>

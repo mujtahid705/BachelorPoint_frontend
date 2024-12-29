@@ -3,18 +3,38 @@ import { Button, Form, Input, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import CustomButton from "../components/ui/CustomButton";
+import useUpdateUser from "../hooks/useUpdateUser";
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setTriggerReload } from "../redux/appSlice";
 
 const EditProfilePage = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [dp, setDp] = useState("");
   const [imgError, setImgError] = useState("");
 
-  const onFinish = (values) => {
+  const updateUser = useUpdateUser();
+  const onFinish = async (values) => {
     if (dp.length === 0) {
       setImgError(true);
     } else {
       setImgError(false);
       const data = { ...values, dp };
       console.log("Success:", data);
+      const res = await updateUser(data);
+
+      if (res.error) {
+        toast.error(res.error);
+      } else {
+        toast.success(res.message);
+        dispatch(setTriggerReload());
+        setTimeout(() => {
+          navigate("/profile");
+        }, 2000);
+      }
     }
   };
 
@@ -45,6 +65,9 @@ const EditProfilePage = () => {
 
   return (
     <>
+      <div>
+        <Toaster />
+      </div>
       <div className={styles.container}>
         <p className={styles.title}>Edit Profile</p>
         <div className={styles.formContainer}>

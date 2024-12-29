@@ -10,16 +10,9 @@ import img2 from "../assets/apartment2.jpg";
 import img3 from "../assets/apartment3.jpg";
 import img4 from "../assets/apartment4.jpg";
 import cover from "../assets/cover2.jpg";
-import dp from "../assets/dp1.jpg";
+import dp from "../assets/dp.png";
 import { useSelector } from "react-redux";
-
-// const USER = {
-//   name: "Muhammad Mujtahid",
-//   bio: "This is a awesome bio!!",
-//   studentId: "+8801973108826",
-//   email: "muhammad.mujtahid@g.bracu.ac.bd",
-//   dp: dp,
-// };
+import { imgBaseUrl } from "../base_url";
 
 const DUMMY_DATA = [
   {
@@ -76,7 +69,7 @@ const ProfilePage = () => {
           }
           studentId={user.studentId}
           email={user.email}
-          dp={user.dp ? user.dp : dp}
+          dp={user.dp ? `${imgBaseUrl}/${user.dp}` : dp}
           cover={cover}
         />
       )}
