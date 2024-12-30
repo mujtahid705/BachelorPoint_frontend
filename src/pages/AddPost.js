@@ -1,22 +1,46 @@
 import styles from "./AddPost.module.css";
-import { Button, Form, Input, Upload } from "antd";
+import { Button, Form, Input, Upload, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import CustomButton from "../components/ui/CustomButton";
+import usePostRental from "../hooks/usePostRental";
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const { TextArea } = Input;
+const { Option } = Select;
 
 const AddPost = () => {
+  const navigate = useNavigate();
   const [flatImg, setFlatImg] = useState([]);
   const [imgError, setImgError] = useState("");
+  const [gender, setGender] = useState(null);
 
-  const onFinish = (values) => {
+  const postRental = usePostRental();
+
+  const onFinish = async (values) => {
     if (flatImg.length === 0) {
       setImgError(true);
     } else {
       setImgError(false);
-      const data = { ...values, flatImg: flatImg };
+      const data = {
+        ...values,
+        rent: parseInt(values.rent),
+        images: flatImg,
+        gender,
+      };
       console.log("Success:", data);
+
+      const res = await postRental(data);
+      console.log(res);
+      if (res.error) {
+        toast.error(res.error);
+      } else {
+        toast.success(res.message);
+        setTimeout(() => {
+          navigate("/rentals");
+        }, 2000);
+      }
     }
   };
 
@@ -48,8 +72,15 @@ const AddPost = () => {
     });
   };
 
+  const onGenderChange = (value) => {
+    setGender(value);
+  };
+
   return (
     <>
+      <div>
+        <Toaster />
+      </div>
       <div className={styles.container}>
         <p className={styles.title}>Add Post</p>
 
@@ -110,6 +141,26 @@ const AddPost = () => {
             </Form.Item>
 
             <Form.Item
+              name="gender"
+              label="Looking for (Gender)"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <Select
+                placeholder="Select gender"
+                onChange={onGenderChange}
+                allowClear
+              >
+                <Option value="male">male</Option>
+                <Option value="female">female</Option>
+                <Option value="other">other</Option>
+              </Select>
+            </Form.Item>
+
+            <Form.Item
               label="Rent (BDT)"
               name="rent"
               rules={[
@@ -117,9 +168,26 @@ const AddPost = () => {
                   required: true,
                   message: "Please enter the rent!",
                 },
+                {
+                  pattern: /^[0-9]+$/,
+                  message: "Rent must be a number!",
+                },
               ]}
             >
               <Input maxLength={8} />
+            </Form.Item>
+
+            <Form.Item
+              label="Address"
+              name="location"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter the address!",
+                },
+              ]}
+            >
+              <Input />
             </Form.Item>
 
             <Form.Item

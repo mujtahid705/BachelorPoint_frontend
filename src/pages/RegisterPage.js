@@ -137,7 +137,7 @@ const RegisterPage = () => {
                 ]}
               >
                 <Select
-                  placeholder="Select a option and change input text above"
+                  placeholder="Select gender"
                   onChange={onGenderChange}
                   allowClear
                 >
