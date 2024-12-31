@@ -6,8 +6,9 @@ import CustomButton from "../components/ui/CustomButton";
 import useUpdateUser from "../hooks/useUpdateUser";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setTriggerReload } from "../redux/appSlice";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 const EditProfilePage = () => {
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ const EditProfilePage = () => {
 
   const [dp, setDp] = useState("");
   const [imgError, setImgError] = useState("");
+
+  const isLoading = useSelector((state) => state.app.isLoading);
 
   const updateUser = useUpdateUser();
   const onFinish = async (values) => {
@@ -70,6 +73,9 @@ const EditProfilePage = () => {
       </div>
       <div className={styles.container}>
         <p className={styles.title}>Edit Profile</p>
+
+        {isLoading && <LoadingSpinner />}
+
         <div className={styles.formContainer}>
           <Form
             name="basic"

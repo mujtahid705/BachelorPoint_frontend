@@ -3,7 +3,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .middleContainer {
@@ -21,4 +21,14 @@
 .link {
   text-decoration: none;
   color: inherit;
+}
+
+.filter {
+  padding: 20px 50px 0px 50px;
+  background-color: rgb(220, 220, 220);
+}
+
+.noPost {
+  color: grey;
+  text-align: center;
 }

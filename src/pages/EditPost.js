@@ -1,22 +1,47 @@
 import styles from "./AddPost.module.css";
-import { Button, Form, Input, Upload } from "antd";
+import { Button, Form, Input, Upload, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomButton from "../components/ui/CustomButton";
+import useGetPostById from "../hooks/useGetPostById";
+import { formatPostsData } from "../utils";
+import { useParams } from "react-router-dom";
+import useEditPost from "../hooks/useEditPost";
+import toast, { Toaster } from "react-hot-toast";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
+import { useSelector } from "react-redux";
 
 const { TextArea } = Input;
+const { Option } = Select;
 
 const EditPost = () => {
+  const { id } = useParams();
+  const [postData, setPostData] = useState();
   const [flatImg, setFlatImg] = useState([]);
   const [imgError, setImgError] = useState("");
+  const [gender, setGender] = useState(null);
 
-  const onFinish = (values) => {
-    if (flatImg.length === 0) {
+  const isLoading = useSelector((state) => state.app.isLoading);
+
+  const [form] = Form.useForm();
+
+  const editPost = useEditPost();
+  const onFinish = async (values) => {
+    if (flatImg.length === 0 || !gender) {
       setImgError(true);
     } else {
       setImgError(false);
-      const data = { ...values, flatImg: flatImg };
+      const data = { ...values, images: flatImg, gender };
       console.log("Success:", data);
+
+      const resData = await editPost(id, data);
+      console.log(resData);
+
+      if (resData.error) {
+        toast.error(resData.error.sqlMessage);
+      } else {
+        toast.success(resData.message);
+      }
     }
   };
 
@@ -48,14 +73,49 @@ const EditPost = () => {
     });
   };
 
+  const onGenderChange = (value) => {
+    setGender(value);
+  };
+
+  const getPost = useGetPostById();
+  const postDataFetch = async (id) => {
+    const data = await getPost(id);
+
+    if (data.error) {
+      console.log(data);
+      return;
+    }
+    const fData = formatPostsData([data]);
+    console.log(...fData);
+    setPostData(...fData);
+    form.setFieldsValue({
+      title: fData[0].title,
+      description: fData[0].description,
+      available_from: fData[0].available_from,
+      rent: fData[0].rent,
+    });
+    setFlatImg(fData[0].images || []);
+    setGender(fData[0].gender || null);
+  };
+
+  useEffect(() => {
+    postDataFetch(id);
+  }, []);
+
   return (
     <>
+      <div>
+        <Toaster />
+      </div>
       <div className={styles.container}>
         <p className={styles.title}>Edit Post</p>
+
+        {isLoading && <LoadingSpinner />}
 
         <div className={styles.formContainer}>
           <Form
             name="basic"
+            form={form}
             className={styles.form}
             labelCol={{
               span: 8,
@@ -69,6 +129,7 @@ const EditPost = () => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
+            initialValues={postData}
           >
             <Form.Item
               label="Title"
@@ -110,6 +171,26 @@ const EditPost = () => {
             </Form.Item>
 
             <Form.Item
+              name="gender"
+              label="Looking for (Gender)"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <Select
+                placeholder="Select gender"
+                onChange={onGenderChange}
+                allowClear
+              >
+                <Option value="male">male</Option>
+                <Option value="female">female</Option>
+                <Option value="other">other</Option>
+              </Select>
+            </Form.Item>
+
+            <Form.Item
               label="Rent (BDT)"
               name="rent"
               rules={[
@@ -120,6 +201,19 @@ const EditPost = () => {
               ]}
             >
               <Input maxLength={8} />
+            </Form.Item>
+
+            <Form.Item
+              label="Address"
+              name="location"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter the address!",
+                },
+              ]}
+            >
+              <Input />
             </Form.Item>
 
             <Form.Item

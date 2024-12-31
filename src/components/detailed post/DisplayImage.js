@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./DisplayImage.module.css";
+import { imgBaseUrl } from "../../base_url";
 
 const DisplayImage = ({ img }) => {
   const [displayImg, setDisplayImg] = useState(img[0]);
@@ -8,7 +9,7 @@ const DisplayImage = ({ img }) => {
       <div className={styles.displayImgContainer}>
         <img
           className={styles.displayImg}
-          src={displayImg}
+          src={`${imgBaseUrl}/${displayImg}`}
           alt="display_image"
         />
       </div>
@@ -18,7 +19,7 @@ const DisplayImage = ({ img }) => {
           <img
             key={index}
             className={styles.img}
-            src={src}
+            src={`${imgBaseUrl}/${src}`}
             alt="image"
             onClick={() => setDisplayImg(img[index])}
           />

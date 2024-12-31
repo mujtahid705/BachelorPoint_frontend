@@ -69,7 +69,7 @@
 .actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 15px;
+  margin: 15px;
 }
 
 .link {

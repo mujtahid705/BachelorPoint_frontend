@@ -8,6 +8,8 @@ import img2 from "../../assets/apartment2.jpg";
 import img3 from "../../assets/apartment3.jpg";
 import img4 from "../../assets/apartment4.jpg";
 import { imgBaseUrl } from "../../base_url";
+import useDeletePost from "../../hooks/useDeletePost";
+import toast, { Toaster } from "react-hot-toast";
 
 const DUMMY_DATA = [
   {
@@ -61,8 +63,25 @@ const ApAllPostsList = ({ posts, setReloadTrigger }) => {
       post.id.toString().includes(searchQuery)
   );
 
+  // Delete post
+  const deletePost = useDeletePost();
+
+  const deleteHandler = async (id) => {
+    const res = await deletePost(id);
+
+    if (res.error) {
+      toast.error(res.error.sqlMessage);
+    } else {
+      toast.success(res.message);
+      setReloadTrigger((prev) => !prev);
+    }
+  };
+
   return (
     <div className={styles.container}>
+      <div>
+        <Toaster />
+      </div>
       <h1>All Posts</h1>
 
       <Input
@@ -101,7 +120,11 @@ const ApAllPostsList = ({ posts, setReloadTrigger }) => {
                 <td>{post.rent}</td>
                 <td>{post.location}</td>
                 <td>
-                  <Button type="primary" danger>
+                  <Button
+                    type="primary"
+                    danger
+                    onClick={() => deleteHandler(post.id)}
+                  >
                     Delete
                   </Button>
                 </td>

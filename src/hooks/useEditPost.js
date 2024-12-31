@@ -2,16 +2,16 @@ import { useDispatch } from "react-redux";
 import { baseUrl } from "../base_url";
 import { setIsLoading } from "../redux/appSlice";
 
-const getPost = async (type) => {
+const edit = async (id, data) => {
   const token = localStorage.getItem("bp-token");
 
-  // type => "all" (All posts) type => "self" (Own posts)
-  const response = await fetch(`${baseUrl}/posts/${type}`, {
-    method: "GET",
+  const response = await fetch(`${baseUrl}/posts/update/${id}`, {
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
+    body: JSON.stringify(data),
   });
 
   if (!response.ok) {
@@ -19,26 +19,25 @@ const getPost = async (type) => {
     return errData;
   }
 
-  const data = await response.json();
-  return data;
+  const resData = await response.json();
+  return resData;
 };
 
-const useGetAllPosts = () => {
+const useEditPost = () => {
   const dispatch = useDispatch();
 
-  const getAllPosts = async (type = "all") => {
+  const editPost = async (id, data) => {
     dispatch(setIsLoading(true));
-
     try {
-      const data = await getPost(type);
+      const resData = await edit(id, data);
       dispatch(setIsLoading(false));
-      return data;
+      return resData;
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
   };
 
-  return getAllPosts;
+  return editPost;
 };
 
-export default useGetAllPosts;
+export default useEditPost;

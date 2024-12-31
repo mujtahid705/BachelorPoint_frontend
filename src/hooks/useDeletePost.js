@@ -2,12 +2,11 @@ import { useDispatch } from "react-redux";
 import { baseUrl } from "../base_url";
 import { setIsLoading } from "../redux/appSlice";
 
-const getPost = async (type) => {
+const delPost = async (id) => {
   const token = localStorage.getItem("bp-token");
 
-  // type => "all" (All posts) type => "self" (Own posts)
-  const response = await fetch(`${baseUrl}/posts/${type}`, {
-    method: "GET",
+  const response = await fetch(`${baseUrl}/posts/${id}`, {
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -23,14 +22,14 @@ const getPost = async (type) => {
   return data;
 };
 
-const useGetAllPosts = () => {
+const useDeletePost = () => {
   const dispatch = useDispatch();
 
-  const getAllPosts = async (type = "all") => {
+  const deletePost = async (id) => {
     dispatch(setIsLoading(true));
 
     try {
-      const data = await getPost(type);
+      const data = await delPost(id);
       dispatch(setIsLoading(false));
       return data;
     } catch (err) {
@@ -38,7 +37,7 @@ const useGetAllPosts = () => {
     }
   };
 
-  return getAllPosts;
+  return deletePost;
 };
 
-export default useGetAllPosts;
+export default useDeletePost;

@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import useGetAllPosts from "../hooks/useGetAllPosts";
 import { formatPostsData } from "../utils";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 const AdminPanelPage = () => {
   const [activeTab, setActiveTab] = useState("All Users");
@@ -17,6 +18,7 @@ const AdminPanelPage = () => {
   const [reloadTrigger, setReloadTrigger] = useState(false);
   const navigate = useNavigate();
   const isLoggedin = useSelector((state) => state.app.isLoggedin);
+  const isLoading = useSelector((state) => state.app.isLoading);
 
   if (!isLoggedin) navigate("/login");
 
@@ -62,6 +64,8 @@ const AdminPanelPage = () => {
           }}
         />
       </div>
+
+      {isLoading && <LoadingSpinner />}
 
       {activeTab === "All Users" && (
         <ApAllUsersList users={users} setReloadTrigger={setReloadTrigger} />

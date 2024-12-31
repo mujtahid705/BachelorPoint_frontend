@@ -1,13 +1,20 @@
 import styles from "./DetailedPostPage.module.css";
 import DisplayImage from "../components/detailed post/DisplayImage";
 import DisplayInformation from "../components/detailed post/DisplayInformation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal, Button } from "antd";
 
 import img1 from "../assets/apartment1.jpg";
 import img2 from "../assets/apartment2.jpg";
 import img3 from "../assets/apartment3.jpg";
 import img4 from "../assets/apartment4.jpg";
+import useGetPostById from "../hooks/useGetPostById";
+import { formatPostsData } from "../utils";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import useGetContact from "../hooks/useGetContact";
+import toast, { Toaster } from "react-hot-toast";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 const DUMMY_DATA = {
   id: 1,
@@ -27,10 +34,38 @@ const DUMMY_DATA = {
 };
 
 const DetailedPostPage = () => {
+  const { id } = useParams();
+  const isLoading = useSelector((state) => state.app.isLoading);
+  const [postData, setPostData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [contactInfo, setContactInfo] = useState();
+  const getPost = useGetPostById();
 
-  const showModal = () => {
-    setIsModalOpen(true);
+  const postDataFetch = async (id) => {
+    const data = await getPost(id);
+
+    if (data.error) {
+      console.log(data);
+      return;
+    }
+    const fData = formatPostsData([data]);
+    setPostData(...fData);
+  };
+
+  useEffect(() => {
+    postDataFetch(id);
+  }, []);
+
+  const getContactInfo = useGetContact();
+  const showModal = async (id) => {
+    const data = await getContactInfo(id);
+    if (data.error) {
+      toast.error(data.error);
+    } else {
+      setContactInfo(data);
+      console.log(data);
+      setIsModalOpen(true);
+    }
   };
 
   const handleClose = () => {
@@ -39,29 +74,40 @@ const DetailedPostPage = () => {
 
   return (
     <>
-      <div className={styles.container}>
-        <div className={styles.imageContainer}>
-          <DisplayImage img={DUMMY_DATA.flatImg} />
-        </div>
-
-        <DisplayInformation data={DUMMY_DATA} onClick={showModal} />
+      <div>
+        <Toaster />
       </div>
+      {!isLoading && postData.images && (
+        <div className={styles.container}>
+          <div className={styles.imageContainer}>
+            <DisplayImage img={postData.images} />
+          </div>
 
-      <Modal
-        title="Contact Information"
-        open={isModalOpen}
-        onCancel={handleClose}
-        footer={[
-          <Button key="close" onClick={handleClose}>
-            Close
-          </Button>,
-        ]}
-      >
-        {/* After Checking if the gender of the user matches with the criteria */}
-        <p>Name: {DUMMY_DATA.personal_info.name}</p>
-        <p>Email: {DUMMY_DATA.personal_info.email}</p>
-        <p>Phone: {DUMMY_DATA.personal_info.phone}</p>
-      </Modal>
+          <DisplayInformation data={postData} onClick={showModal} />
+        </div>
+      )}
+
+      {contactInfo && (
+        <Modal
+          title="Contact Information"
+          open={isModalOpen}
+          onCancel={handleClose}
+          footer={[
+            <Button key="close" onClick={handleClose}>
+              Close
+            </Button>,
+          ]}
+        >
+          <p>Name: {contactInfo.name}</p>
+          <p>Phone: {contactInfo.studentId}</p>
+          <p>Email: {contactInfo.email}</p>
+        </Modal>
+      )}
+      {isLoading && (
+        <div style={{ height: "100vh" }}>
+          <LoadingSpinner />
+        </div>
+      )}
     </>
   );
 };

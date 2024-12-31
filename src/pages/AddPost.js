@@ -6,6 +6,8 @@ import CustomButton from "../components/ui/CustomButton";
 import usePostRental from "../hooks/usePostRental";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
+import { useSelector } from "react-redux";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -15,6 +17,8 @@ const AddPost = () => {
   const [flatImg, setFlatImg] = useState([]);
   const [imgError, setImgError] = useState("");
   const [gender, setGender] = useState(null);
+
+  const isLoading = useSelector((state) => state.app.isLoading);
 
   const postRental = usePostRental();
 
@@ -83,6 +87,8 @@ const AddPost = () => {
       </div>
       <div className={styles.container}>
         <p className={styles.title}>Add Post</p>
+
+        {isLoading && <LoadingSpinner />}
 
         <div className={styles.formContainer}>
           <Form
