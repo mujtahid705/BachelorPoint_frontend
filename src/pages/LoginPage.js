@@ -18,7 +18,7 @@ const LoginPage = () => {
     const data = await login(values);
 
     if (error || data.error) {
-      toast.error(data.error);
+      toast.error(data.error.sqlMessage);
     } else if (data && data.token) {
       toast.success(data.message);
       localStorage.setItem("bp-token", data.token);

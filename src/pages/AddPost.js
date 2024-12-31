@@ -34,7 +34,7 @@ const AddPost = () => {
       const res = await postRental(data);
       console.log(res);
       if (res.error) {
-        toast.error(res.error);
+        toast.error(res.error.sqlMessage);
       } else {
         toast.success(res.message);
         setTimeout(() => {

@@ -1,9 +1,9 @@
 .posts {
-  padding: 20px;
+  padding: 50px;
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
-  justify-content: center;
+  gap: 20px;
+  justify-content: space-between;
 }
 
 .middleContainer {

@@ -43,7 +43,7 @@ const ApAllUsersList = ({ users, setReloadTrigger }) => {
     const data = await banUser(studentId);
 
     if (data.error) {
-      toast.error(data.error);
+      toast.error(data.error.sqlMessage);
     } else {
       toast.success(data.message);
       setReloadTrigger((prev) => !prev);
@@ -56,7 +56,7 @@ const ApAllUsersList = ({ users, setReloadTrigger }) => {
     const data = await makeAdmin(studentId);
 
     if (data.error) {
-      toast.error(data.error);
+      toast.error(data.error.sqlMessage);
     } else {
       toast.success(data.message);
       setReloadTrigger((prev) => !prev);

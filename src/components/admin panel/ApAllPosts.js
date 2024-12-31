@@ -7,6 +7,7 @@ import img1 from "../../assets/apartment1.jpg";
 import img2 from "../../assets/apartment2.jpg";
 import img3 from "../../assets/apartment3.jpg";
 import img4 from "../../assets/apartment4.jpg";
+import { imgBaseUrl } from "../../base_url";
 
 const DUMMY_DATA = [
   {
@@ -51,10 +52,10 @@ const DUMMY_DATA = [
   },
 ];
 
-const ApAllPostsList = () => {
+const ApAllPostsList = ({ posts, setReloadTrigger }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredData = DUMMY_DATA.filter(
+  const filteredData = posts.filter(
     (post) =>
       post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       post.id.toString().includes(searchQuery)
@@ -90,7 +91,7 @@ const ApAllPostsList = () => {
                 <td>{post.id}</td>
                 <td>
                   <img
-                    src={post.image}
+                    src={`${imgBaseUrl}/${post.images[0]}`}
                     alt={post.title}
                     className={styles.image}
                   />

@@ -7,10 +7,13 @@ import ApAccountApprove from "../components/admin panel/ApAccountApprovals";
 import useAdminFetchAllUsers from "../hooks/useAdminFetchAllUsers";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import useGetAllPosts from "../hooks/useGetAllPosts";
+import { formatPostsData } from "../utils";
 
 const AdminPanelPage = () => {
   const [activeTab, setActiveTab] = useState("All Users");
   const [users, setUsers] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [reloadTrigger, setReloadTrigger] = useState(false);
   const navigate = useNavigate();
   const isLoggedin = useSelector((state) => state.app.isLoggedin);
@@ -18,6 +21,7 @@ const AdminPanelPage = () => {
   if (!isLoggedin) navigate("/login");
 
   const fetchAllUsers = useAdminFetchAllUsers();
+  const getAllPosts = useGetAllPosts();
 
   useEffect(() => {
     const getAllUsers = async () => {
@@ -29,8 +33,21 @@ const AdminPanelPage = () => {
         setUsers(data);
       }
     };
+
+    const getPosts = async () => {
+      const data = await getAllPosts();
+
+      if (data.error) {
+        console.log(data);
+      } else {
+        const fData = formatPostsData(data);
+        setPosts(fData);
+      }
+    };
+
     if (activeTab === "All Users" || activeTab === "Pending Account Approvals")
       getAllUsers();
+    if (activeTab === "All Posts") getPosts();
   }, [activeTab, reloadTrigger]);
 
   return (
@@ -49,7 +66,9 @@ const AdminPanelPage = () => {
       {activeTab === "All Users" && (
         <ApAllUsersList users={users} setReloadTrigger={setReloadTrigger} />
       )}
-      {activeTab === "All Posts" && <ApAllPostsList />}
+      {activeTab === "All Posts" && (
+        <ApAllPostsList posts={posts} setReloadTrigger={setReloadTrigger} />
+      )}
       {activeTab === "Pending Account Approvals" && (
         <ApAccountApprove users={users} setReloadTrigger={setReloadTrigger} />
       )}

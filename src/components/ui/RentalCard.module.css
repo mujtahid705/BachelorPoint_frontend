@@ -56,6 +56,7 @@
 .location {
   font-size: 14px;
   color: #007bff;
+  width: 65%;
 }
 
 .price {

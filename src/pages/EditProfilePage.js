@@ -27,7 +27,7 @@ const EditProfilePage = () => {
       const res = await updateUser(data);
 
       if (res.error) {
-        toast.error(res.error);
+        toast.error(res.error.sqlMessage);
       } else {
         toast.success(res.message);
         dispatch(setTriggerReload());

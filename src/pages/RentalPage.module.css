@@ -1,7 +1,16 @@
+.container {
+  min-height: 95vh;
+}
+
+.filter {
+  padding: 20px 50px 0px 50px;
+  background-color: rgb(220, 220, 220);
+}
+
 .posts {
-  padding: 20px;
+  padding: 50px;
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
-  justify-content: center;
+  gap: 20px;
+  justify-content: flex-start;
 }
