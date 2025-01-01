@@ -2,11 +2,12 @@ import styles from "./LoginPage.module.css";
 import logo from "../assets/logo2.png";
 import { Button, Form, Input, Upload, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 import useAuthRegister from "../hooks/useAuthRegister";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const { Option } = Select;
 
@@ -16,6 +17,13 @@ const RegisterPage = () => {
   const [gender, setGender] = useState("");
   const [bracuIdImg, setBracuIdImg] = useState("");
   const [imgError, setImgError] = useState("");
+
+  const isLoggedIn = useSelector((state) => state.app.isLoggedin);
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/rentals");
+    }
+  }, [isLoggedIn]);
 
   const onFinish = async (values) => {
     if (bracuIdImg.length === 0) {
@@ -31,7 +39,7 @@ const RegisterPage = () => {
       console.log(error, "ERROR");
 
       if (error || resData.error) {
-        toast.error(resData.error.sqlMessage);
+        toast.error(resData.error);
       } else {
         toast.success(resData.message);
       }

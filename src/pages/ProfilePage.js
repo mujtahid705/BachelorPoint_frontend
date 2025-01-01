@@ -22,11 +22,20 @@ import toast, { Toaster } from "react-hot-toast";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 const ProfilePage = () => {
+  const [approveError, setApproveError] = useState(false);
   const [posts, setPosts] = useState([]);
   const user = useSelector((state) => state.app.user);
   const [searchQuery, setSearchQuery] = useState("");
 
   const isLoading = useSelector((state) => state.app.isLoading);
+
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => state.app.isLoggedin);
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+  }, [isLoggedIn]);
 
   const filteredPosts = posts.filter(
     (post) =>
@@ -40,7 +49,10 @@ const ProfilePage = () => {
     const data = await getAllPosts("self");
 
     if (data.error) {
-      console.log(data);
+      if (data.error === "Your account is not approved yet!") {
+        setApproveError(true);
+      }
+      toast.error(data.error);
     } else {
       const fData = formatPostsData(data);
       setPosts(fData);
@@ -59,7 +71,7 @@ const ProfilePage = () => {
     const res = await deletePost(id);
 
     if (res.error) {
-      toast.error(res.error.sqlMessage);
+      toast.error(res.error);
     } else {
       toast.success(res.message);
       setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
@@ -104,6 +116,20 @@ const ProfilePage = () => {
       {isLoading && <LoadingSpinner />}
 
       {posts.length === 0 && <p className={styles.noPost}>No posts to show!</p>}
+
+      {approveError && (
+        <p
+          style={{
+            textAlign: "center",
+            color: "red",
+            fontSize: "1.2rem",
+            marginTop: "50px",
+          }}
+        >
+          Your account is not approved yet! Please wait for an admin to approve
+          your account.
+        </p>
+      )}
 
       <div className={styles.posts}>
         {filteredPosts.map((post, index) => (

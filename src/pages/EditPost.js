@@ -24,8 +24,15 @@ const EditPost = () => {
 
   const isLoading = useSelector((state) => state.app.isLoading);
 
-  const [form] = Form.useForm();
   const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => state.app.isLoggedin);
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+  }, [isLoggedIn]);
+
+  const [form] = Form.useForm();
 
   const editPost = useEditPost();
   const onFinish = async (values) => {
@@ -39,7 +46,7 @@ const EditPost = () => {
       const resData = await editPost(id, data);
 
       if (resData.error) {
-        toast.error(resData.error.sqlMessage);
+        toast.error(resData.error);
       } else {
         toast.success(resData.message);
         setTimeout(() => {
@@ -70,8 +77,6 @@ const EditPost = () => {
         setDisplayImg((prev) => [...prev, { url: reader.result }]);
       };
       reader.readAsDataURL(file);
-    } else {
-      console.error("File is not of type Blob:", file);
     }
   };
 

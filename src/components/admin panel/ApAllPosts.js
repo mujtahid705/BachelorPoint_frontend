@@ -70,7 +70,7 @@ const ApAllPostsList = ({ posts, setReloadTrigger }) => {
     const res = await deletePost(id);
 
     if (res.error) {
-      toast.error(res.error.sqlMessage);
+      toast.error(res.error);
     } else {
       toast.success(res.message);
       setReloadTrigger((prev) => !prev);

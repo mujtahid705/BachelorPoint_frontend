@@ -5,27 +5,6 @@ import useBanUser from "../../hooks/useBanUser";
 import toast, { Toaster } from "react-hot-toast";
 import useMakeAdmin from "../../hooks/useMakeAdmin";
 
-const DUMMY_USERS = [
-  {
-    studentId: "1",
-    name: "John Doe",
-    email: "john@example.com",
-    gender: "Male",
-  },
-  {
-    studentId: "2",
-    name: "Jane Smith",
-    email: "jane@example.com",
-    gender: "Female",
-  },
-  {
-    studentId: "3",
-    name: "Sam Brown",
-    email: "sam@example.com",
-    gender: "Male",
-  },
-];
-
 const ApAllUsersList = ({ users, setReloadTrigger }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -43,7 +22,7 @@ const ApAllUsersList = ({ users, setReloadTrigger }) => {
     const data = await banUser(studentId);
 
     if (data.error) {
-      toast.error(data.error.sqlMessage);
+      toast.error(data.error);
     } else {
       toast.success(data.message);
       setReloadTrigger((prev) => !prev);

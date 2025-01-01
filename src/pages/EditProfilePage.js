@@ -1,7 +1,7 @@
 import styles from "./AddPost.module.css";
 import { Button, Form, Input, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomButton from "../components/ui/CustomButton";
 import useUpdateUser from "../hooks/useUpdateUser";
 import toast, { Toaster } from "react-hot-toast";
@@ -19,6 +19,13 @@ const EditProfilePage = () => {
 
   const isLoading = useSelector((state) => state.app.isLoading);
 
+  const isLoggedIn = useSelector((state) => state.app.isLoggedin);
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+  }, [isLoggedIn]);
+
   const updateUser = useUpdateUser();
   const onFinish = async (values) => {
     if (dp.length === 0) {
@@ -30,7 +37,7 @@ const EditProfilePage = () => {
       const res = await updateUser(data);
 
       if (res.error) {
-        toast.error(res.error.sqlMessage);
+        toast.error(res.error);
       } else {
         toast.success(res.message);
         dispatch(setTriggerReload());

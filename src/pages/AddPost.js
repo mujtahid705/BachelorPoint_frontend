@@ -1,7 +1,7 @@
 import styles from "./AddPost.module.css";
 import { Button, Form, Input, Upload, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomButton from "../components/ui/CustomButton";
 import usePostRental from "../hooks/usePostRental";
 import toast, { Toaster } from "react-hot-toast";
@@ -19,6 +19,13 @@ const AddPost = () => {
   const [gender, setGender] = useState(null);
 
   const isLoading = useSelector((state) => state.app.isLoading);
+
+  const isLoggedIn = useSelector((state) => state.app.isLoggedin);
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+  }, [isLoggedIn]);
 
   const postRental = usePostRental();
 
@@ -38,7 +45,7 @@ const AddPost = () => {
       const res = await postRental(data);
       console.log(res);
       if (res.error) {
-        toast.error(res.error.sqlMessage);
+        toast.error(res.error);
       } else {
         toast.success(res.message);
         setTimeout(() => {

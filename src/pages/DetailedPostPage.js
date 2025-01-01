@@ -10,7 +10,7 @@ import img3 from "../assets/apartment3.jpg";
 import img4 from "../assets/apartment4.jpg";
 import useGetPostById from "../hooks/useGetPostById";
 import { formatPostsData } from "../utils";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useGetContact from "../hooks/useGetContact";
 import toast, { Toaster } from "react-hot-toast";
@@ -39,6 +39,15 @@ const DetailedPostPage = () => {
   const [postData, setPostData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [contactInfo, setContactInfo] = useState();
+
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => state.app.isLoggedin);
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+  }, [isLoggedIn]);
+
   const getPost = useGetPostById();
 
   const postDataFetch = async (id) => {

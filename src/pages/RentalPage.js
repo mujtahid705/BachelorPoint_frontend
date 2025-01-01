@@ -8,19 +8,32 @@ import { formatPostsData } from "../utils";
 import { Input } from "antd";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const RentalPage = () => {
   const [posts, setPosts] = useState([]);
+  const [approveError, setApproveError] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const getAllPosts = useGetAllPosts();
 
   const isLoading = useSelector((state) => state.app.isLoading);
 
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => state.app.isLoggedin);
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+  }, [isLoggedIn]);
+
   const getPosts = async () => {
     const data = await getAllPosts();
 
     if (data.error) {
-      toast.error(data.error.sqlMessage);
+      if (data.error === "Your account is not approved yet!") {
+        setApproveError(true);
+      }
+      toast.error(data.error);
     } else {
       const fData = formatPostsData(data);
       setPosts(fData);
@@ -57,6 +70,20 @@ const RentalPage = () => {
           />
         </div>
 
+        {approveError && (
+          <p
+            style={{
+              textAlign: "center",
+              color: "red",
+              fontSize: "1.2rem",
+              marginTop: "50px",
+            }}
+          >
+            Your account is not approved yet! Please wait for an admin to
+            approve your account.
+          </p>
+        )}
+
         <div className={styles.posts}>
           {filteredPosts.map((post, index) => (
             <RentalCard
@@ -67,6 +94,7 @@ const RentalPage = () => {
               description={post.description}
               rent={post.rent}
               location={post.location}
+              gender={post.gender}
             />
           ))}
         </div>

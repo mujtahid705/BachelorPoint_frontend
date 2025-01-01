@@ -2,6 +2,10 @@
   min-height: 82vh;
 }
 
+.coverContainer {
+  position: relative;
+}
+
 .cover {
   width: 100%;
   height: 300px;
@@ -20,4 +24,25 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
   pointer-events: none;
+}
+
+.welcomeContainer {
+  text-align: center;
+  padding: 20px;
+}
+
+.welcomeContainer h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.welcomeContainer p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.welcomeImage {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
 }

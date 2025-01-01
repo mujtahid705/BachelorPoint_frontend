@@ -2,15 +2,23 @@ import styles from "./LoginPage.module.css";
 import logo from "../assets/logo2.png";
 import { Button, Form, Input } from "antd";
 import toast, { Toaster } from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import useAuthLogin from "../hooks/useAuthLogin";
 import { setIsLoggedin } from "../redux/appSlice";
+import { useEffect } from "react";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const isLoggedIn = useSelector((state) => state.app.isLoggedin);
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/rentals");
+    }
+  }, [isLoggedIn]);
 
   const { loading, error, login } = useAuthLogin();
 
@@ -18,7 +26,7 @@ const LoginPage = () => {
     const data = await login(values);
 
     if (error || data.error) {
-      toast.error(data.error.sqlMessage);
+      toast.error(data.error);
     } else if (data && data.token) {
       toast.success(data.message);
       localStorage.setItem("bp-token", data.token);

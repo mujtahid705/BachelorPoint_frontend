@@ -25,7 +25,7 @@ const ApAccountApprove = ({ users, setReloadTrigger }) => {
     const data = await approveAccount(id);
 
     if (data.error) {
-      toast.error(data.error.sqlMessage);
+      toast.error(data.error);
     } else {
       toast.success(data.message);
       setReloadTrigger((prev) => !prev);
@@ -38,7 +38,7 @@ const ApAccountApprove = ({ users, setReloadTrigger }) => {
     const data = await deleteAccount(id);
 
     if (data.error) {
-      toast.error(data.error.sqlMessage);
+      toast.error(data.error);
     } else {
       toast.success(data.message);
       setReloadTrigger((prev) => !prev);
