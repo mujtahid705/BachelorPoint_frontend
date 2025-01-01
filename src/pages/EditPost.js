@@ -10,7 +10,6 @@ import useEditPost from "../hooks/useEditPost";
 import toast, { Toaster } from "react-hot-toast";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import { useSelector } from "react-redux";
-import { imgBaseUrl } from "../base_url";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -38,7 +37,6 @@ const EditPost = () => {
       console.log("Success:", data);
 
       const resData = await editPost(id, data);
-      console.log(resData);
 
       if (resData.error) {
         toast.error(resData.error.sqlMessage);
@@ -81,6 +79,9 @@ const EditPost = () => {
     setDisplayImg((prev) => {
       return prev.filter((img) => img.url !== file.url);
     });
+    setFlatImg((prev) =>
+      prev.filter((img) => img !== file.url.split("http://localhost:5000/")[1])
+    );
   };
 
   const onGenderChange = (value) => {
@@ -102,6 +103,8 @@ const EditPost = () => {
       description: fData[0].description,
       available_from: fData[0].available_from,
       rent: fData[0].rent,
+      location: fData[0].location,
+      gender: fData[0].gender,
     });
     setFlatImg(fData[0].images || []);
     const fImgs = formatDisplayImgs(fData[0].images);
@@ -182,8 +185,8 @@ const EditPost = () => {
             </Form.Item>
 
             <Form.Item
-              name="gender"
               label="Looking for (Gender)"
+              name="gender"
               rules={[
                 {
                   required: true,
