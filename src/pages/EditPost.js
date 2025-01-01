@@ -4,12 +4,13 @@ import { PlusOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import CustomButton from "../components/ui/CustomButton";
 import useGetPostById from "../hooks/useGetPostById";
-import { formatPostsData } from "../utils";
-import { useParams } from "react-router-dom";
+import { formatDisplayImgs, formatPostsData } from "../utils";
+import { useNavigate, useParams } from "react-router-dom";
 import useEditPost from "../hooks/useEditPost";
 import toast, { Toaster } from "react-hot-toast";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import { useSelector } from "react-redux";
+import { imgBaseUrl } from "../base_url";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -18,12 +19,14 @@ const EditPost = () => {
   const { id } = useParams();
   const [postData, setPostData] = useState();
   const [flatImg, setFlatImg] = useState([]);
+  const [displayImg, setDisplayImg] = useState([]);
   const [imgError, setImgError] = useState("");
   const [gender, setGender] = useState(null);
 
   const isLoading = useSelector((state) => state.app.isLoading);
 
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   const editPost = useEditPost();
   const onFinish = async (values) => {
@@ -41,6 +44,9 @@ const EditPost = () => {
         toast.error(resData.error.sqlMessage);
       } else {
         toast.success(resData.message);
+        setTimeout(() => {
+          navigate("/profile");
+        }, 2000);
       }
     }
   };
@@ -56,20 +62,24 @@ const EditPost = () => {
 
   const addBackgroundHandler = (info) => {
     if (info.fileList.length === 0) return;
+
     const file = info.file.originFileObj || info.file;
-    if (file) {
+
+    if (file instanceof Blob) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setFlatImg((prev) => [...prev, reader.result]);
+        setDisplayImg((prev) => [...prev, { url: reader.result }]);
       };
       reader.readAsDataURL(file);
+    } else {
+      console.error("File is not of type Blob:", file);
     }
   };
 
   const handleBackgroundRemove = (file) => {
-    setFlatImg((prev) => {
-      const newFileList = prev.filter((img) => img !== file.thumbUrl);
-      return newFileList;
+    setDisplayImg((prev) => {
+      return prev.filter((img) => img.url !== file.url);
     });
   };
 
@@ -86,7 +96,6 @@ const EditPost = () => {
       return;
     }
     const fData = formatPostsData([data]);
-    console.log(...fData);
     setPostData(...fData);
     form.setFieldsValue({
       title: fData[0].title,
@@ -95,6 +104,8 @@ const EditPost = () => {
       rent: fData[0].rent,
     });
     setFlatImg(fData[0].images || []);
+    const fImgs = formatDisplayImgs(fData[0].images);
+    setDisplayImg(fImgs);
     setGender(fData[0].gender || null);
   };
 
@@ -182,6 +193,7 @@ const EditPost = () => {
               <Select
                 placeholder="Select gender"
                 onChange={onGenderChange}
+                value={gender}
                 allowClear
               >
                 <Option value="male">male</Option>
@@ -230,6 +242,7 @@ const EditPost = () => {
                 onChange={addBackgroundHandler}
                 onRemove={handleBackgroundRemove}
                 beforeUpload={() => false}
+                fileList={displayImg}
                 showUploadList={{
                   showPreviewIcon: false,
                   showRemoveIcon: true,

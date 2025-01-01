@@ -1,3 +1,5 @@
+import { imgBaseUrl } from "./base_url";
+
 export const formatPostsData = (data) => {
   const posts = [...data];
   const formattedData = [];
@@ -28,4 +30,12 @@ export const formatPostsData = (data) => {
   });
 
   return formattedData;
+};
+
+export const formatDisplayImgs = (data) => {
+  const fData = [];
+  data.forEach((img) => {
+    fData.push({ url: `${imgBaseUrl}/${img}` });
+  });
+  return fData;
 };
