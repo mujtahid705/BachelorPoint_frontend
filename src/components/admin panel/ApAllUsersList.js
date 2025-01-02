@@ -4,9 +4,12 @@ import styles from "./ApAllUsersList.module.css";
 import useBanUser from "../../hooks/useBanUser";
 import toast, { Toaster } from "react-hot-toast";
 import useMakeAdmin from "../../hooks/useMakeAdmin";
+import { useSelector } from "react-redux";
 
 const ApAllUsersList = ({ users, setReloadTrigger }) => {
   const [searchQuery, setSearchQuery] = useState("");
+
+  const userData = useSelector((state) => state.app.user);
 
   const approvedUsers = users.filter((user) => user.status === "approved");
 
@@ -87,13 +90,15 @@ const ApAllUsersList = ({ users, setReloadTrigger }) => {
                       </Button>
                     )}
                     {"  "}
-                    <Button
-                      type="primary"
-                      danger
-                      onClick={() => banUserHandler(user.studentId)}
-                    >
-                      Ban User
-                    </Button>
+                    {userData.studentId !== user.studentId && (
+                      <Button
+                        type="primary"
+                        danger
+                        onClick={() => banUserHandler(user.studentId)}
+                      >
+                        Ban User
+                      </Button>
+                    )}
                   </td>
                 </tr>
               ))}
