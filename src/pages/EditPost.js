@@ -206,7 +206,6 @@ const EditPost = () => {
               >
                 <Option value="male">male</Option>
                 <Option value="female">female</Option>
-                <Option value="other">other</Option>
               </Select>
             </Form.Item>
 
